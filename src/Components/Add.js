@@ -1,9 +1,10 @@
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 // context
-function Add({ addExpense }) {
-  const [amount, setAmount] = useState();
-  const [description, setDescription] = useState();
+function Add({ add }) {
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+
   return (
     <div className="add-expense space">
       <input
@@ -18,13 +19,9 @@ function Add({ addExpense }) {
         placeholder="Add expense description"
         onChange={(e) => setDescription(e.target.value)}
       />
-      <select>
-        <option>Expense</option>
-        <option>Income</option>
-      </select>
       <button
         className="expense-button"
-        onClick={() => addExpense(amount, description)}
+        onClick={() => add(amount, description)}
       >
         <FaPlus />
       </button>

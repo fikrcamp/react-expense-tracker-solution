@@ -10,25 +10,22 @@ function App() {
   const [expenses, setExpenses] = useState([]);
   const [total, setTotal] = useState(0);
 
-  function addExpense(amount, description) {
-    //code
-    //amount , descriptio
+  function addExpense(amountInput, descriptionInput) {
     let id = expenses.length === 0 ? 1 : expenses[expenses.length - 1].id + 1;
-    setExpenses([
-      ...expenses,
-      { id: id, amount: amount, description: description },
-    ]);
 
-    setTotal(total + Number(amount));
+    let newExpense = expenses.concat({
+      id: id,
+      amount: amountInput,
+      description: descriptionInput,
+    });
+
+    setTotal(total + Number(amountInput));
+    setExpenses(newExpense);
   }
 
-  function removeExpense(id) {
-    let filtered = expenses.filter((expense) => expense.id !== id);
-
-    let remove = expenses.find((expense) => expense.id === id);
-    console.log(remove.amount);
-    setTotal(total - remove.amount);
-
+  function removeExpense(id, amount) {
+    let filtered = expenses.filter((expense) => expense.id != id);
+    setTotal(total - amount);
     setExpenses(filtered);
   }
 
@@ -37,11 +34,13 @@ function App() {
       <Header />
       <div className="container">
         <div>
+          {/* total balance */}
           <Balance total={total} />
-          <Add addExpense={addExpense} />
-
+          {/* input in add */}
+          <Add add={addExpense} />
+          {/* expense in expense */}
           {expenses.map((expense) => (
-            <Expenses expense={expense} remove={removeExpense} />
+            <Expenses data={expense} remove={removeExpense} />
           ))}
         </div>
       </div>
